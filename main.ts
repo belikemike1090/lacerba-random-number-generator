@@ -5,7 +5,21 @@ function RNG(min: number, max: number) {
     return Math.trunc(rng * (max - min) + min);    
 }
 
-/* function RNGSequence(len:number, min: number, max: number) {
+/* function RNGDec (min: number, max:number, precision:number){
+    if (precision < 0) {
+        throw new Error('precision must be a positive number');
+    }
+    if (!Number.isInteger(precision)) {
+        throw new Error('precision must be a positive number');
+    }
+    
+    const multFactor =  Math.pow(10, precision);
+ return RNG(min * multFactor, max * multFactor) / multFactor;
+}
+
+console.log(RNGDec(5, 10, -12)); */
+
+function RNGSequence(len:number, min: number, max: number) {
     if (len >= max - min) {
         throw new Error(`cannot find ${len} numbers beetwen ${min} and ${max}`)
     }
@@ -21,19 +35,16 @@ function RNG(min: number, max: number) {
     return res;
 }
 
-const myArr = RNGSequence(6, 0, 5);
-console.log(myArr); */
+const route = ['Bari', 'Cagliari', 'Firenze', 'Genova', 'Milano', 'Napoli', 'Palermo', 'Roma', 'Torino', 'Venezia', 'Nazionale'];
 
-function RNGDec (min: number, max:number, precision:number){
-    if (precision < 0) {
-        throw new Error('precision must be a positive number');
-    }
-    if (!Number.isInteger(precision)) {
-        throw new Error('precision must be a positive number');
-    }
-    
-    const multFactor =  Math.pow(10, precision);
- return RNG(min * multFactor, max * multFactor) / multFactor;
+const estrazioni: { [ruota: string] :number[] } = {};
+
+for (const ruota of route) {
+    const estrazione = RNGSequence(5, 1, 100);
+    estrazioni[ruota] = estrazione;
 }
 
-console.log(RNGDec(5, 10, -12));
+console.log(JSON.stringify(estrazioni, null, 2));
+
+
+
